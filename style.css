@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css?family=Permanent+Marker");
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+#app {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: "Permanent Marker", cursive;
+}
+
+.status {
+  position: absolute;
+  top: 24px;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  color: #e0f7fa;
+}
+.status b { color: #ffd54f; }
+
+.board {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  animation: pop .9s cubic-bezier(.34, 1.56, .64, 1);
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font: bold 50px "Comic Sans MS", sans-serif;
+  user-select: none;
+}
+.cell:nth-child(-n+6) { border-bottom: 3px solid #4dd0e1; }
+.cell:nth-child(3n+2) { border-left: 3px solid #4dd0e1; border-right: 3px solid #4dd0e1; }
+.cell span { display: block; animation: pop .6s cubic-bezier(.34, 1.56, .64, 1); }
+.cell.x span { color: #ff4081; text-shadow: 0 0 12px rgba(255, 64, 129, .6); }
+.cell.o span { color: #ffd54f; text-shadow: 0 0 12px rgba(255, 213, 79, .6); }
+
+.win {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 20, 30, .88);
+  text-align: center;
+  z-index: 10;
+  animation: pop .7s cubic-bezier(.34, 1.56, .64, 1);
+}
+.win.hidden { display: none; }
+.win .laugh { width: 260px; max-width: 70vw; margin-bottom: 6px; background: none; }
+.win .laugh.hidden { display: none; }
+.win h2 {
+  margin: 0 0 18px;
+  font-size: 64px;
+  color: #ffd54f;
+  text-shadow: 0 0 30px rgba(255, 213, 79, .7);
+}
+.win button {
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(.175, .885, .32, 1.275);
+  outline: none;
+  padding: 14px 26px;
+  background-color: #ff4081;
+  border: none;
+  border-radius: 10px;
+  font-family: "Permanent Marker", cursive;
+  font-size: 22px;
+  color: #fff;
+}
+.win button:hover { transform: scale(1.1); }
+
+@keyframes pop {
+  from { opacity: 0; transform: translate(var(--tx, 0), var(--ty, 0)) scale(0); }
+  to   { opacity: 1; transform: translate(var(--tx, 0), var(--ty, 0)) scale(1); }
+}
+.board { --tx: -50%; --ty: -50%; }
